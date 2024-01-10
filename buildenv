@@ -1,0 +1,68 @@
+GITLAB_CLI_VERSION="1.36.0"
+
+export ZOPEN_BUILD_LINE="STABLE"
+export ZOPEN_STABLE_TAG="v${GITLAB_CLI_VERSION}"
+export ZOPEN_STABLE_URL="https://gitlab.com/gitlab-org/cli.git"
+export ZOPEN_STABLE_DEPS="comp_go make wharf git coreutils"
+
+export ZOPEN_DEV_URL="https://gitlab.com/gitlab-org/cli.git"
+export ZOPEN_DEV_DEPS="comp_go make wharf git coreutils"
+export ZOPEN_DEV_BRANCH="trunk"
+
+export ZOPEN_RUNTIME_DEPS="git"
+
+export ZOPEN_COMP=GO
+export ZOPEN_CONFIGURE="zopen_wharf"
+export ZOPEN_CONFIGURE_MINIMAL=1
+export ZOPEN_INSTALL="zopen_install"
+export ZOPEN_MAKE="skip"
+export ZOPEN_CHECK="skip"
+export ZOPEN_CLEAN="zopen_clean"
+
+export ZOPEN_INSTALL_OPTS="install prefix=\$ZOPEN_INSTALL_DIR"
+
+export ZOPEN_NAME="gitlabcli"
+
+zopen_init()
+{
+  export CGO_ENABLED=0
+  # Go installs binaries, so create the bin dir as well
+  export GOBIN=$ZOPEN_INSTALL_DIR/bin
+  export PATH=$PATH:$GOROOT/go-build-zos/bin
+  mkdir -p $ZOPEN_INSTALL_DIR
+}
+
+zopen_install()
+{
+    go install 
+}
+
+zopen_wharf()
+{
+  cd ..
+  git clone https://github.com/AlecAivazis/survey.git
+  git clone https://github.com/gosuri/uilive.git
+  
+  cd survey
+  git apply ../patches/surveypatch
+  cd ..
+
+  cd uilive
+  git apply ../patches/uilivepatch
+  cd ..
+
+  go work init ./cli ./survey ./uilive
+  wharf ./cli/...
+  cd ./cli
+}
+
+zopen_clean()
+{
+  rm -rf ../.wharf_cache ../go.work* ../wharf_port ../survey ../uilive
+}
+
+zopen_get_version()
+{
+  # ./bin/gh --version | head -1 | cut -f3 -d' ' | cut -d'-' -f1
+  echo GITLAB_CLI_VERSION
+}

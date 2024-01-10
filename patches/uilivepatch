@@ -1,0 +1,16 @@
+diff --git a/terminal_size.go b/terminal_size.go
+index ebef466..91b0423 100644
+--- a/terminal_size.go
++++ b/terminal_size.go
+@@ -31,7 +31,9 @@ func getTermSize() (int, int) {
+ 			return 0, 0
+ 		}
+ 	}
+-	_, _, _ = syscall.Syscall(syscall.SYS_IOCTL,
+-		out.Fd(), uintptr(syscall.TIOCGWINSZ), uintptr(unsafe.Pointer(&sz)))
++    err := syscall.Ioctl(int(out.Fd()), syscall.TIOCGWINSZ, uintptr(unsafe.Pointer(&sz)))
++    if err != nil {
++        return 0, 0
++    }
+ 	return int(sz.cols), int(sz.rows)
+ }
