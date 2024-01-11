@@ -67,5 +67,5 @@ zopen_clean()
 zopen_get_version()
 {
   # ./bin/gh --version | head -1 | cut -f3 -d' ' | cut -d'-' -f1
-  echo GITLAB_CLI_VERSION
+  echo "$GITLAB_CLI_VERSION"
 }
