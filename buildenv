@@ -34,7 +34,7 @@ zopen_init()
 
 zopen_install()
 {
-    go install 
+    go install ./cmd/glab
 }
 
 zopen_wharf()
@@ -42,7 +42,7 @@ zopen_wharf()
   cd ..
   git clone https://github.com/AlecAivazis/survey.git
   git clone https://github.com/gosuri/uilive.git
-  
+
   cd survey
   git apply ../patches/surveypatch
   cd ..
