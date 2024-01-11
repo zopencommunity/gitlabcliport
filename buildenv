@@ -1,3 +1,4 @@
+# bump: glab-version /GITLAB_CLI_VERSION="(.*)"/ https://gitlab.com/gitlab-org/cli.git|semver:*
 GITLAB_CLI_VERSION="1.36.0"
 
 export ZOPEN_BUILD_LINE="STABLE"
@@ -14,8 +15,10 @@ export ZOPEN_RUNTIME_DEPS="git"
 export ZOPEN_COMP=GO
 export ZOPEN_CONFIGURE="zopen_wharf"
 export ZOPEN_CONFIGURE_MINIMAL=1
+export ZOPEN_MAKE="go"
+export ZOPEN_MAKE_OPTS="build"
+export ZOPEN_MAKE_MINIMAL=1
 export ZOPEN_INSTALL="zopen_install"
-export ZOPEN_MAKE="skip"
 export ZOPEN_CHECK="skip"
 export ZOPEN_CLEAN="zopen_clean"
 
@@ -34,7 +37,7 @@ zopen_init()
 
 zopen_install()
 {
-    go install ./cmd/glab
+    go install
 }
 
 zopen_wharf()
@@ -52,8 +55,8 @@ zopen_wharf()
   cd ..
 
   go work init ./cli ./survey ./uilive
-  wharf ./cli/...
-  cd ./cli
+  wharf ./cli/cmd/glab/...
+  cd ./cli/cmd/glab
 }
 
 zopen_clean()
