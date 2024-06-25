@@ -1,5 +1,5 @@
 # bump: glab-version /GITLAB_CLI_VERSION="(.*)"/ https://gitlab.com/gitlab-org/cli.git|semver:*
-GITLAB_CLI_VERSION="1.40.0"
+GITLAB_CLI_VERSION="1.43.0"
 
 export ZOPEN_BUILD_LINE="STABLE"
 export ZOPEN_STABLE_TAG="v${GITLAB_CLI_VERSION}"
