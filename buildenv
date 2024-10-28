@@ -2,6 +2,7 @@
 GITLAB_CLI_VERSION="1.40.0"
 
 export ZOPEN_BUILD_LINE="STABLE"
+export ZOPEN_CATEGORIES="development"
 export ZOPEN_STABLE_TAG="v${GITLAB_CLI_VERSION}"
 export ZOPEN_STABLE_URL="https://gitlab.com/gitlab-org/cli.git"
 export ZOPEN_STABLE_DEPS="comp_go make wharf git coreutils"
